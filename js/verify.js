@@ -2,21 +2,28 @@
 // Verify.js
 //--------------------------------------------------------------------------------
 import * as Upload from '/js/upload.js';
+import * as Util from '/js/upload.js';
 
 // 入力チェック
 export function check(){
+
+  // ボタンを無効化
+  Util.setButtonState(false);
+
   const dataTitle = document.getElementById('dataTitle');
   const uploadFile = document.getElementById('uploadFile');
 
   // ファイル
   if (uploadFile.files.length == 0) {
-    setMessage('ファイルが選択されていません。', 'red');
+    Util.setMessage('ファイルが選択されていません。', 'red');
+    Util.setButtonState(true);
     return false;
   }
 
   // タイトル
   if(!dataTitle.value){
-    setMessage('タイトルが入力されていません。', 'red');
+    Util.setMessage('タイトルが入力されていません。', 'red');
+    Util.setButtonState(true);
     return false;
   }
 
@@ -26,7 +33,8 @@ export function check(){
     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
   ];
   if (!validExcelTypes.includes(file.type)) {
-    setMessage('Excel形式（.xlsx）のファイルを指定してください。', 'red');
+    Util.setMessage('Excel形式（.xlsx）のファイルを指定してください。', 'red');
+    Util.setButtonState(true);
     return false;
   }
 
@@ -35,23 +43,10 @@ export function check(){
   const MB = fileSize.toFixed(2);
   console.log(MB);
   if(MB > 1){
-    setMessage(`ファイルサイズ（${MB}MB）が大きすぎます。1MB以内としてください。`, 'red');
+    Util.setMessage(`ファイルサイズ（${MB}MB）が大きすぎます。1MB以内としてください。`, 'red');
+    Util.setButtonState(true);
     return false;
   }
 
-  // アップロード実行
-  Upload.exec();
-}
-
-// メッセージ表示
-function setMessage(message, color) {
-  const messageBox = document.getElementById('messageBox');
-  const classNames = {
-    'gray':'text-gray-500',
-    'blue':'text-blue-500',
-    'green':'text-green-500',
-    'red':'text-red-500'
-  };
-  const cls = classNames[color];
-  messageBox.innerHTML = `<p class="${cls}">${message}</p>`;
+  Upload.exec();    // アップロード処理（STEP2）へ
 }
