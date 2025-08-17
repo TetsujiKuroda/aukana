@@ -5,7 +5,9 @@ import * as Convert from '/js/convert.js';
 
 // アップロード実行
 export function exec(e){
-  showMessage('アップロード中...', true);
+
+  // メッセージ表示
+  setMessage('アップロード中です...', 'blue');
 
   // アップロードボタンを無効化
   const uploadButton = document.getElementById('uploadButton');
@@ -33,7 +35,7 @@ export function exec(e){
     const jsonString = await res.text();
     console.log(jsonString);
     const json = JSON.parse(jsonString);
-    showMessage(json.message, json.success);
+    setMessage(json.message, json.success ? 'blue' : 'red');
     if(json.success){
       Convert.exec(json.id);
     }
@@ -42,10 +44,15 @@ export function exec(e){
 }
 
 // メッセージ表示
-function showMessage(message, isSuccess) {
+function setMessage(message, color) {
   const messageBox = document.getElementById('messageBox');
-  const classNames = isSuccess ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700';
-  messageBox.textContent = message;
-  messageBox.className = 'mt-4 p-4 rounded-lg text-sm text-center font-medium ' + classNames;
-  messageBox.style.display = 'block';
+  const classNames = {
+    'gray':'text-gray-500',
+    'blue':'text-blue-500',
+    'green':'text-green-500',
+    'red':'text-red-500'
+  };
+  const cls = classNames[color];
+  const msg = `<p class="${cls}">${message}</p>`;
+  messageBox.innerHTML = msg;
 }

@@ -8,26 +8,25 @@ export function check(){
   const dataTitle = document.getElementById('dataTitle');
   const uploadFile = document.getElementById('uploadFile');
 
-  // タイトル
-  if(!dataTitle.value){
-    showMessage('タイトルが入力されていません。');
+  // ファイル
+  if (uploadFile.files.length == 0) {
+    setMessage('ファイルが選択されていません。', 'red');
     return false;
   }
 
-  // ファイル選択
-  if (uploadFile.files.length == 0) {
-    showMessage('ファイルが選択されていません。');
+  // タイトル
+  if(!dataTitle.value){
+    setMessage('タイトルが入力されていません。', 'red');
     return false;
   }
 
   // ファイル種別
   const file = uploadFile.files[0];
   const validExcelTypes = [
-    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // .xlsx
-    'application/vnd.ms-excel' // .xls
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
   ];
   if (!validExcelTypes.includes(file.type)) {
-    showMessage('Excel形式のファイルを指定してください。');
+    setMessage('Excel形式（.xlsx）のファイルを指定してください。', 'red');
     return false;
   }
 
@@ -36,7 +35,7 @@ export function check(){
   const MB = fileSize.toFixed(2);
   console.log(MB);
   if(MB > 1){
-    showMessage(`設問シートにしては、ファイルサイズ（${MB}MB）が大きすぎます。`);
+    setMessage(`ファイルサイズ（${MB}MB）が大きすぎます。1MB以内としてください。`, 'red');
     return false;
   }
 
@@ -45,10 +44,14 @@ export function check(){
 }
 
 // メッセージ表示
-function showMessage(message, isSuccess) {
+function setMessage(message, color) {
   const messageBox = document.getElementById('messageBox');
-  const classNames = isSuccess ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700';
-  messageBox.textContent = message;
-  messageBox.className = 'mt-4 p-4 rounded-lg text-sm text-center font-medium ' + classNames;
-  messageBox.style.display = 'block';
+  const classNames = {
+    'gray':'text-gray-500',
+    'blue':'text-blue-500',
+    'green':'text-green-500',
+    'red':'text-red-500'
+  };
+  const cls = classNames[color];
+  messageBox.innerHTML = `<p class="${cls}">${message}</p>`;
 }

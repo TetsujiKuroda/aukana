@@ -3,23 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ファイルアップロード</title>
+  <title>Aukana｜設問シートのアプロード</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.css">
   <script type="module" src="js/app.js" defer></script>
   </style>
 </head>
 <body class="bg-gray-100 flex flex-col items-center p-4">
-  <div class="bg-white m-4 p-6 rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-md">
-    <h1 class="text-2xl font-bold mb-6 text-center text-gray-800">ファイルをアップロード</h1>
-    <form id="uploadForm" class="space-y-6">
+  <div class="bg-white m-4 py-4 px-6 rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-md">
+    <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">Aukana</h1>
+    <form id="uploadForm" class="space-y-4">
       <div>
-        <label for="dataTitle" class="block text-sm font-medium text-gray-700">タイトル</label>
-        <input type="text" id="dataTitle" name="dataTitle"
-               class="mt-1 block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-      </div>
-      <div>
-        <label for="uploadFile" class="sr-only">ファイルを選択</label>
+        <h2 class="text-sm mb-2">1. アップロードするファイル（xlsxのみ）</h2>
         <input type="file" id="uploadFile" name="uploadFile"
                class="block w-full text-sm text-gray-500
                       file:mr-4 file:py-2 file:px-4
@@ -28,14 +23,22 @@
                       file:bg-violet-50 file:text-violet-700
                       hover:file:bg-violet-100 cursor-pointer"/>
       </div>
+      <div>
+        <h2 class="text-sm mb-2">2. アンケートの表題（任意の名称）</h2>
+        <input type="text" id="dataTitle" name="dataTitle"
+               class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+      </div>
       <button type="submit" id="uploadButton"
               class="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-md
                      hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 
                      focus:ring-offset-2 transition-transform duration-100 active:scale-95">
               アップロード
       </button>
+      <div>
+        <div id="messageBox"
+          class="block w-full px-2 py-1 text-sm border border-gray-300 rounded-md shadow-sm">　</div>
+      </div>
     </form>
-    <div id="messageBox" class="mt-4 p-4 rounded-lg text-sm text-center font-medium hidden"></div>
   </div>
 </body>
 </html>
