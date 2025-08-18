@@ -12,12 +12,16 @@ export async function exec(id){
     if (!res.ok) {
       throw new Error(`HTTP error! status: ${res.status}`);
     }
-
-    // メッセージ表示
     const jsonString = await res.text();
-    console.log(jsonString);
     const json = JSON.parse(jsonString);
-    Util.setMessage(json.message, json.success ? 'blue' : 'red');
+    console.log(json);
+
+    // STEP4の結果表示
+    if(json.success){
+      Util.setMessage(`設問データを登録しました（設問番号：${id}）`, 'blue');
+    }else{
+      Util.setMessage(json.message, 'red');
+    }
 
     // フォームをリセット
     document.getElementById('uploadForm').reset();
@@ -25,6 +29,6 @@ export async function exec(id){
 
   } catch (err) {
     console.error("Fetch error:", err);
-    Util.setMessage(`通信エラー: ${err.message}`, 'red');
+    Util.setMessage(err.message, 'red');
   }
 }

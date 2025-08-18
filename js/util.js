@@ -22,13 +22,13 @@ export function setButtonState(enable) {
    // ボタンを有効化
    uploadButton.disabled = false;
    // uploadButton.classList.remove('button-disabled-style'); // 例: 無効化用クラス
-   uploadButton.classList.remove('bg-blue-400', 'cursor-not-allowed'); // 例: 適用していたクラスを削除
+   uploadButton.classList.remove('bg-blue-300', 'cursor-not-allowed'); // 例: 適用していたクラスを削除
    uploadButton.classList.add('bg-indigo-600'); // 例: 通常時のクラスに戻す
  } else {
    // ボタンを無効化
    uploadButton.disabled = true;
    // uploadButton.classList.add('button-disabled-style'); // 例: 無効化用クラス
    uploadButton.classList.remove('bg-indigo-600'); // 例: 通常時のクラスを削除
-   uploadButton.classList.add('bg-blue-400', 'cursor-not-allowed'); // 例: 背景色水色、カーソル禁止マーク
+   uploadButton.classList.add('bg-blue-300', 'cursor-not-allowed'); // 例: 背景色水色、カーソル禁止マーク
  }
 }
