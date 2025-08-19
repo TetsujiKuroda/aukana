@@ -1,8 +1,8 @@
 //--------------------------------------------------------------------------------
 // Verify.js
 //--------------------------------------------------------------------------------
-import * as Upload from '/js/upload.js';
-import * as Util from '/js/util.js';
+import * as Upload from '/js/upload/upload.js';
+import * as Util from '/js/upload/util.js';
 
 // 入力チェック
 export function check(){

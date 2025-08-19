@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------
 // Upload.js
 //--------------------------------------------------------------------------------
-import * as Convert from '/js/convert.js';
+import * as Convert from '/js/upload/convert.js';
 import * as Util from '/js/util.js';
 
 // アップロード実行

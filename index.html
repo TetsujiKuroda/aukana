@@ -3,41 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aukana｜設問シートのアプロード</title>
+  <title>Aukana｜ホーム</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="style.css">
-  <script type="module" src="js/app.js" defer></script>
+  <script type="module" src="js/index/app.js" defer></script>
   </style>
 </head>
 <body class="bg-gray-100 flex flex-col items-center p-4">
   <div class="bg-white m-4 py-4 px-6 rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-md">
     <h1 class="text-2xl font-bold mb-4 text-center text-gray-800">Aukana</h1>
-    <form id="uploadForm" class="space-y-4">
-      <div>
-        <h2 class="text-sm mb-2">1. アップロードするファイル（xlsxのみ）</h2>
-        <input type="file" id="uploadFile" name="uploadFile"
-               class="block w-full text-sm text-gray-500
-                      file:mr-4 file:py-2 file:px-4
-                      file:rounded-full file:border-0
-                      file:text-sm file:font-semibold
-                      file:bg-violet-50 file:text-violet-700
-                      hover:file:bg-violet-100 cursor-pointer"/>
-      </div>
-      <div>
-        <h2 class="text-sm mb-2">2. アンケートの表題（任意の名称に変更可）</h2>
-        <input type="text" id="dataTitle" name="dataTitle"
-               class="block w-full px-3 py-2 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-      </div>
-      <button type="submit" id="uploadButton"
-              class="w-full py-2 px-4 text-white font-semibold rounded-lg shadow-md
-                     bg-indigo-600 transition-transform duration-100 active:scale-95">
-              アップロード
+    <div class="flex flex-col">
+      <button id="upload"
+              class="mb-4 w-full py-3 px-4 text-white font-semibold rounded-lg shadow-md
+              bg-indigo-600 transition-transform duration-100 active:scale-95">
+              設問ファイルのアップロード
       </button>
-      <div>
-        <div id="messageBox"
-          class="block w-full px-2 py-1 text-sm border border-gray-300 rounded-md shadow-sm">　</div>
-      </div>
-    </form>
+      <button id="survey"
+              class="mb-4 w-full py-3 px-4 text-white font-semibold rounded-lg shadow-md
+              bg-indigo-600 transition-transform duration-100 active:scale-95">
+              サーベイを実施
+      </button>
+    </div>
   </div>
 </body>
 </html>

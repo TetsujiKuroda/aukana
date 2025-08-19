@@ -1,8 +1,8 @@
 //--------------------------------------------------------------------------------
 // Convert.js
 //--------------------------------------------------------------------------------
-import * as Util from '/js/util.js';
-import * as Publish from '/js/publish.js';
+import * as Util from '/js/upload/util.js';
+import * as Publish from '/js/upload/publish.js';
 
 export async function exec(id){
   const GasUrl = 'https://script.google.com/macros/s/AKfycbyGKMEgSXqHMRv7eJbVFf2rM068S5Go3-wOVJgM2L1wUqXL3sM_nGT9ZSiUwq8bFfe1/exec';

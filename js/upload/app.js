@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------
 // App.js
 //--------------------------------------------------------------------------------
-import * as Verify from '/js/verify.js';
+import * as Verify from '/js/upload/verify.js';
   
 // アップロードボタンのイベントリスナー
 document.getElementById('uploadForm').addEventListener('submit', function(e) {
