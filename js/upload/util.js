@@ -8,7 +8,7 @@ export function setMessage(message, color) {
   const classNames = {
     'gray':'text-gray-500',
     'blue':'text-blue-500',
-    'green':'text-green-500',
+    'green':'text-green-700',
     'red':'text-red-500'
   };
   const cls = classNames[color];

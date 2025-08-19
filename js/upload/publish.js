@@ -18,7 +18,14 @@ export async function exec(id){
 
     // STEP4の結果表示
     if(json.success){
-      Util.setMessage(`設問データを登録しました（設問番号：${id}）`, 'blue');
+      const message = [
+        `設問データ（No. ${id}）を登録しました。<br>`,
+        `<a href="survey.html?id=${id}" `,
+        'class="inline-block w-auto py-1 px-2 text-white rounded-lg shadow-md bg-indigo-600 transition-transform duration-100 active:scale-95 no-underline">',
+        'サーベイ画面へ進む',
+        '</a>'
+      ].join('');
+      Util.setMessage(message, 'blue');
     }else{
       Util.setMessage(json.message, 'red');
     }

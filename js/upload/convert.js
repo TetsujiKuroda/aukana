@@ -19,7 +19,7 @@ export async function exec(id){
 
     // STEP3の結果表示
     if(json.success){
-      Util.setMessage('[4] 設問データを登録中です...', 'green');
+      Util.setMessage('設問データを登録中です...', 'green');
       Publish.exec(id);     // 公開処理（STEP4）へ
     }else{
       Util.setMessage(json.message, 'red');

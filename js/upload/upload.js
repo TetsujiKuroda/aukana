@@ -2,13 +2,13 @@
 // Upload.js
 //--------------------------------------------------------------------------------
 import * as Convert from '/js/upload/convert.js';
-import * as Util from '/js/util.js';
+import * as Util from '/js/upload/util.js';
 
 // アップロード実行
 export function exec(e){
 
   // メッセージ表示＆ボタン無効化
-  Util.setMessage('[1] アップロードしています...', 'green');
+  Util.setMessage('アップロードしています...', 'green');
   Util.setButtonState(false);
 
   // アップロードボタンを無効化
@@ -42,11 +42,8 @@ export function exec(e){
 
       // STEP2の結果表示
       if(json.success){
-        Util.setMessage('[2] ファイルを保存しました。', 'green');
-        setTimeout(function(){
-          Util.setMessage('[3] データを変換中です...', 'green');
-          Convert.exec(json.id);    // ファイル変換処理（STEP3）へ  
-        }, 1000);
+        Util.setMessage('データを変換中です...', 'green');
+        Convert.exec(json.id);    // ファイル変換処理（STEP3）へ  
       }else{
         Util.setMessage(json.message, 'red');
         Util.setButtonState(true);
