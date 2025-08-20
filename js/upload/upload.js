@@ -8,7 +8,7 @@ import * as Util from '/js/upload/util.js';
 export function exec(e){
 
   // メッセージ表示＆ボタン無効化
-  Util.setMessage('アップロードしています...', 'green');
+  Util.setMessage('アップロードしています...', 'green', true);
   Util.setButtonState(false);
 
   // アップロードボタンを無効化
@@ -42,7 +42,7 @@ export function exec(e){
 
       // STEP2の結果表示
       if(json.success){
-        Util.setMessage('データを変換中です...', 'green');
+        Util.setMessage('データを変換中です...', 'green', true);
         Convert.exec(json.id);    // ファイル変換処理（STEP3）へ  
       }else{
         Util.setMessage(json.message, 'red');

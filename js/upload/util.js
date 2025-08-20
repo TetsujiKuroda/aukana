@@ -3,7 +3,7 @@
 //--------------------------------------------------------------------------------
 
 // メッセージ表示
-export function setMessage(message, color) {
+export function setMessage(message, color, isLoading) {
   const messageBox = document.getElementById('messageBox');
   const classNames = {
     'gray':'text-gray-500',
@@ -12,7 +12,9 @@ export function setMessage(message, color) {
     'red':'text-red-500'
   };
   const cls = classNames[color];
-  messageBox.innerHTML = `<p class="${cls}">${message}</p>`;
+  const loading = '<span class="loading-spinner"></span>';
+  const msg = isLoading ? loading + message : message;
+  messageBox.innerHTML = `<p class="${cls}">${msg}</p>`;
 }
 
 // ボタンの有効化・無効化
