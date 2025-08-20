@@ -1,16 +1,20 @@
 body {
     font-family: 'Inter', sans-serif;
-    min-height: 100vh;
     background-color: black;
 }
 
 .background-image{
-  background-image: url('./image/background_dark.jpg');
+  background-image: url('image/background_dark.jpg');
   background-size: 100% auto;
   background-position: top center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  width: 100vw;
+  margin: 0;
+  padding: 0;
+  top: 0;
 }
+
 .loading-spinner {
     display: inline-block; /* テキストと同じ行に表示 */
     width: 20px; /* スピナーのサイズ */
@@ -26,4 +30,12 @@ body {
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+  }
+
+  #contents {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 340px;
+    transform: translate(-50%, -50%); 
   }
