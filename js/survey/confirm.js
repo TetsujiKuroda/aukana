@@ -31,13 +31,13 @@ function modalOpen(title, message, button, color){
   const modalTItle = document.getElementById('modalTItle');
   const modalMessage = document.getElementById('modalMessage');
   const modalButton = document.getElementById('modalButton');
-  const surveyTitle = document.getElementById("surveyTitle");
+  const surveyMessage = document.getElementById("surveyMessage");
   modalTItle.textContent = title;
   modalMessage.innerHTML = message;
   modalMessage.style.color = color || 'black';
   modalButton.textContent = button;
   modal.classList.remove('hidden');
-  surveyTitle.innerHTML = "";
+  surveyMessage.innerHTML = "";
 }
 // モーダルメッセージを更新
 function modalMessage(message, color){

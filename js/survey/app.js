@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
   if(id.indexOf("?") > -1) id = id.split("?")[0];  // 開発環境の暗黙的パラメータに対応
   if(id){
     // IDが指定されていたら設問データの取得に進む
-    const surveyTitle = document.getElementById("surveyTitle");
+    const surveyMessage = document.getElementById("surveyMessage");
     const loading = '<span class="loading-spinner"></span>';
-    surveyTitle.innerHTML = loading + '設問データ取得中...';
+    surveyMessage.innerHTML = loading + '設問データ取得中...';
     Confirm.getJson(id);
   } else {
     // IDが指定されていないときは入力してもらう
