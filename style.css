@@ -4,9 +4,15 @@ body {
 }
 
 .text-shadow {
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+  text-shadow: #000000 0 0 6px;
 }
 
+.background-image {
+  width: 100%;
+  height: auto;
+  margin: 0;
+  padding: 0;
+}
 .gradation {
   position: fixed;
   top: 0;
@@ -24,12 +30,6 @@ body {
   content: "";
   background: linear-gradient(0deg, black, rgba(0,0,0,0.5) 5%, transparent 15%);
 }
-.background-image {
-  width: 100%;
-  height: auto;
-  margin: 0;
-  padding: 0;
-}
 
 .loading-spinner {
     display: inline-block; /* テキストと同じ行に表示 */
@@ -42,13 +42,13 @@ body {
     vertical-align: middle; /* テキストとスピナーの縦位置を合わせる */
     animation: spin 1s linear infinite; /* 1秒で1回転、無限に繰り返す */
 }
-  
-  @keyframes spin {
+
+@keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
-  }
+}
 
-  #contents {
+.contents {
     position: absolute;
     top: 50%;
     left: 50%;
