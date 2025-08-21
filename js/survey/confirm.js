@@ -31,11 +31,13 @@ function modalOpen(title, message, button, color){
   const modalTItle = document.getElementById('modalTItle');
   const modalMessage = document.getElementById('modalMessage');
   const modalButton = document.getElementById('modalButton');
+  const surveyTitle = document.getElementById("surveyTitle");
   modalTItle.textContent = title;
   modalMessage.innerHTML = message;
   modalMessage.style.color = color || 'black';
   modalButton.textContent = button;
   modal.classList.remove('hidden');
+  surveyTitle.innerHTML = "";
 }
 // モーダルメッセージを更新
 function modalMessage(message, color){
@@ -50,7 +52,7 @@ function modalClose(){
 }
 
 // JSONデータの取得
-async function getJson(id){
+export async function getJson(id){
   console.log(`Confirm.getJson(${id})`);
   const url = [
     'https://firebasestorage.googleapis.com/v0/b/',
@@ -67,6 +69,7 @@ async function getJson(id){
       modalClose();
       Questions.start(json);
     }else{
+      // データ取得失敗
       console.log('JSON not found.');
       modalOpen("設問番号", "設問が見つかりませんでした。", "OK", "red");
     }
