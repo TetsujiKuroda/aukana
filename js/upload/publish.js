@@ -20,9 +20,14 @@ export async function exec(id){
     if(json.success){
       const message = [
         `設問データ（No. ${id}）を登録しました。<br>`,
+        `<a href="upload.html" `,
+        'class="inline-block w-auto my-2 p-2 text-white rounded-lg shadow-md bg-gray-400 transition-transform duration-100 active:scale-95 no-underline">',
+        'リセット',
+        '</a>',
+        '&nbsp&nbsp&nbsp&nbsp',
         `<a href="survey.html?id=${id}" `,
-        'class="inline-block w-auto py-1 px-2 text-white rounded-lg shadow-md bg-indigo-600 transition-transform duration-100 active:scale-95 no-underline">',
-        'サーベイ画面へ進む',
+        'class="inline-block w-auto my-1 p-2 text-white rounded-lg shadow-md bg-indigo-600 transition-transform duration-100 active:scale-95 no-underline">',
+        '診断画面へ',
         '</a>'
       ].join('');
       Util.setMessage(message, 'blue');
@@ -32,7 +37,7 @@ export async function exec(id){
 
     // フォームをリセット
     document.getElementById('uploadForm').reset();
-    Util.setButtonState(true);
+//    Util.setButtonState(true);
 
   } catch (err) {
     console.error("Fetch error:", err);

@@ -20,6 +20,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // モーダルボタンのイベントリスナー
   document.getElementById('modalButton').addEventListener('click', function() {
-    Confirm.onClick();
+    Confirm.onClickOkButton();
   });
 });
