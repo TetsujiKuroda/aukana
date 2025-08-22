@@ -3,52 +3,46 @@
 //--------------------------------------------------------------------------------
 import * as Questions from '/js/survey/questions.js';
 
-// モーダルウィンドウでIDを入力
+// 設問番号（ID）を入力
 export function inputId(){
   console.log("Confirm.inputId()");
-  modalOpen("設問番号", "設問番号を指定してください。", "OK");
+  questionOptions.innerHTML = [
+    '<p id="inputMessage" class="mb-4">設問番号を指定してください。</p>',
+    '<input type="input" id="idInput" name="modalInput" ',
+    'class="block w-1/2 px-3 py-2 mb-4 bg-white border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-center">',
+    '<button id="okButton" class="w-1/3 py-3 px-4 text-white font-semibold rounded-lg shadow-md bg-indigo-600 transition-transform duration-100 active:scale-95">OK</button>',
+  ].join('');
+  const questionArea = document.getElementById('questionArea');
+  questionArea.classList.remove('hidden');
+  const okButton = document.getElementById('okButton');
+  okButton.addEventListener('click', onClickOkButton);
 }
+
+// 入力チェック
 export function onClickOkButton(){
-  const modalInput = document.getElementById('modalInput');
-  const inputValue = modalInput.value;
+  const idInput = document.getElementById('idInput');
+  const inputValue = idInput.value;
   if(inputValue){
     if (!/^[0-9]+$/.test(inputValue)) {
       // 入力エラー（入力値をクリアして再入力）
-      modalInput.value = "";
-      modalOpen("設問番号", "設問番号を指定してください。", "OK");
+      idInput.value = "";
+      setMessage("設問番号を指定してください。");
     } else {
       // 入力OKならJSON取得へ
       const loading = '<span class="loading-spinner"></span>';
-      modalMessage(loading + "検索中...");
+      setMessage(loading + "検索中...");
       getJson(inputValue);
     }
+  }else{
+    setMessage("設問番号を指定してください。");
   }
 }
 
-// モーダルウィンドウを開く
-function modalOpen(title, message, button, color){
-  const modal = document.getElementById('modal');
-  const modalTItle = document.getElementById('modalTItle');
-  const modalMessage = document.getElementById('modalMessage');
-  const modalButton = document.getElementById('modalButton');
-  const surveyMessage = document.getElementById("surveyMessage");
-  modalTItle.textContent = title;
-  modalMessage.innerHTML = message;
-  modalMessage.style.color = color || 'black';
-  modalButton.textContent = button;
-  modal.classList.remove('hidden');
-  surveyMessage.innerHTML = "";
-}
-// モーダルメッセージを更新
-function modalMessage(message, color){
-  const modalMessage = document.getElementById('modalMessage');
+// メッセージを更新
+function setMessage(message, color){
+  const modalMessage = document.getElementById('inputMessage');
   modalMessage.innerHTML = message;
   modalMessage.style.color = color || 'black';  
-}
-// モーダルウィンドウを閉じる
-function modalClose(){
-  const modal = document.getElementById('modal');
-  modal.classList.add('hidden');
 }
 
 // JSONデータの取得
@@ -66,15 +60,19 @@ export async function getJson(id){
     if(res.ok){
       // データ取得成功
       console.log(json);
-      modalClose();
-      Questions.start(json);
+      Questions.start(json, id);
     }else{
       // データ取得失敗
       console.log('JSON not found.');
-      modalOpen("設問番号", "設問が見つかりませんでした。", "OK", "red");
+      const surveyMessage = document.getElementById('surveyMessage');
+      surveyMessage.innerHTML = '';
+      inputId();
+      const idInput = document.getElementById('idInput');
+      idInput.value = id;
+      setMessage("該当データが見つかりませんでした。", "red");
     }
   } catch (error) {
     console.error('Fetch failed:', error);
-    modalOpen("設問番号", "処理エラーが発生したました。", "OK", "red");
+    setMessage("処理エラーが発生したました。", "red");
   }
 }
