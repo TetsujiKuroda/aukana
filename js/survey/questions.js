@@ -42,7 +42,7 @@ function showQuestion(items, num){
 
 function createButton(num, caption){
   const class1 = 'block w-full py-3 px-4';
-  const class2 = 'text-lg font-semibold text-gray-700 peer-checked:bg-green-600 peer-checked:text-white';
+  const class2 = 'text-base font-semibold text-gray-700 peer-checked:bg-green-600 peer-checked:text-white';
   const class3 = 'rounded-lg shadow-md bg-gray-200';
   const class4 = 'cursor-pointer transition-colors duration-200 relative';
     const button = [
