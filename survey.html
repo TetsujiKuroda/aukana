@@ -11,20 +11,20 @@
 </head>
 <body class="bg-gray-100 flex flex-col items-center">
 
-  <div class="bg-white my-6 mx-2 p-4 rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-md">
-    <h1 id="surveyTitle" class="text-2xl font-bold mb-4 text-center text-gray-800">自己診断</h1>
+  <div class="my-4 mx-4 w-full max-w-sm sm:max-w-md">
+    <h1 id="surveyTitle" class="text-xl font-bold mb-2 text-center text-gray-800"></h1>
     <div class="flex flex-col items-center">
       <p id="surveyMessage"></p>
     </div>
   </div>
 
-  <div id="questionArea" class="bg-white my-3 mx-2 p-6 rounded-3xl shadow-2xl w-full max-w-sm sm:max-w-md hidden">
-    <p id="questionText" class="text-xl mb-4 text-gray-800"></p>
+  <div id="questionArea" class="bg-white mb-2 mx-6 py-3 px-6 rounded-3xl shadow-xl max-w-lg hidden">
+    <p id="questionText" class="my-2 text-lg text-gray-800"></p>
     <div id="questionOptions"></div>
-    <div id="questionActions" class="pt-6 flex justify-between items-center">
-      <button id="backButton" class="mb-4 w-[140px] py-3 px-4 text-rose-600 font-bold rounded-lg shadow-md bg-white border-2 border-rose-500 active:scale-95">＜ 前に戻る</button>
-      <button id="nextButton" class="mb-4 w-[140px] py-3 px-4 text-indigo-600 font-bold rounded-lg shadow-md bg-white border-2 border-indigo-500 active:scale-95">次に進む ＞</button>
-    </div>
+  </div>
+  <div id="questionActions" class="my-2 mx-6 py-3 w-full flex justify-between hidden">
+    <button id="backButton" class="ml-12 w-[140px] py-3 px-4 text-rose-600 font-bold rounded-lg shadow-md bg-white border-2 border-rose-500 active:scale-95">＜ 前に戻る</button>
+    <button id="nextButton" class="mr-12 w-[140px] py-3 px-4 text-indigo-600 font-bold rounded-lg shadow-md bg-white border-2 border-indigo-500 active:scale-95">次に進む ＞</button>
   </div>
 
   <div id="modal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center hidden">
