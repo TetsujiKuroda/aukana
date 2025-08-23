@@ -6,15 +6,17 @@ import * as Post from '/js/survey/post.js';
 // 回答の記憶オブジェクト
 const answerData = {};
 
-// 診断を開始
+// 診断を開始 ----------------------------------------------------------------------
 export function start(json, id) {
   console.log("Questions.start()");
 
-  // 進む・戻るボタンのイベントリスナー
+  // 戻るボタンのイベントリスナー
   const backButton = document.getElementById("backButton");
   backButton.addEventListener("click", function(){
     goBack(json.items, answerData);
   });
+
+  // 進むボタンのイベントリスナー
   const nextButton = document.getElementById("nextButton");
   nextButton.addEventListener("click", function(){
     goNext(json.items, answerData);
@@ -40,7 +42,7 @@ export function start(json, id) {
   showQuestion(json.items, answerData);
 }
 
-// 質問と回答を表示
+// 質問と回答を表示 ------------------------------------------------------------
 function showQuestion(items, answerData){
   console.log("Questions.showQuestion()");
   console.log(answerData);
@@ -69,6 +71,16 @@ function showQuestion(items, answerData){
     item.option4 ? createButton(4, item.option4) : '',
   ].join('');
 
+  //イベントリスナーを設置
+  const optionButtons = document.querySelectorAll('input[name="surveyOption"]');
+  if(optionButtons){
+    optionButtons.forEach(radio => {
+      radio.addEventListener('change', (e) => {
+        saveValue(answerData, e.target.value);
+      });  
+    });
+  }
+
   // すでに回答があれば反映
   const selectedAnswer = answerData.selectedOptions[parseInt(answerData.questionIndex)];
   const selectedButton = document.querySelector(`input[name="surveyOption"][value="${selectedAnswer}"]`);
@@ -83,7 +95,7 @@ function showQuestion(items, answerData){
   }
 }
 
-// 選択肢ボタンの作成
+// 選択肢ボタンの作成 ------------------------------------------------------------
 function createButton(num, caption){
   const class1 = 'block w-full py-3 px-4';
   const class2 = 'text-base font-semibold text-gray-700 peer-checked:bg-green-600 peer-checked:text-white';
@@ -100,7 +112,14 @@ function createButton(num, caption){
   return button;
 }
 
-// 戻るボタンのイベントハンドラー
+// 選択された値の保存 ------------------------------------------------------------
+function saveValue(answerData, value){
+  const index = answerData.questionIndex;
+  answerData.selectedOptions[index] = value;
+  console.log(answerData.selectedOptions);
+}
+
+// 戻るボタンのイベントハンドラー --------------------------------------------------
 function goBack(items, answerData){
   resetActionMessage();
   const nextButton = document.getElementById("nextButton");
@@ -109,35 +128,41 @@ function goBack(items, answerData){
   showQuestion(items, answerData);
 }
 
-// 進むボタンのイベントハンドラー
+// 進むボタンのイベントハンドラー --------------------------------------------------
 function goNext(items, answerData){
   resetActionMessage();
+
   if(answerData.questionIndex < items.length - 1){
-    // まだ最終ページでないとき
+
+    // 進むボタンを表示
     const nextButton = document.getElementById("nextButton");
     nextButton.textContent = "次に進む ＞";
+
+    // 選択肢の有無で分岐
     const item = items[answerData.questionIndex];
     if(item.option1 || item.option2 || item.option3 || item.option4){
-      // 選択肢が存在するとき、選択状態をチェック
+
+      // 選択肢が存在するとき（選択状態をチェック）
       const questionOptions = document.getElementById("questionOptions");
       const selectedOption = questionOptions.querySelector('input[type="radio"]:checked');
       if(selectedOption){
-        answerData.selectedOptions[answerData.questionIndex] = selectedOption.value;
-        showNext(items, answerData)
+        showNext(items, answerData);
       }else{
         setActionMessage('回答を選択してください。', 'red');
       }
+
     }else{
-      // 選択肢が存在しないとき、無条件で次へ進む
-      showNext(items, answerData)
+      // 選択肢が存在しないとき（無条件で次へ進む）
+      showNext(items, answerData);
     }        
+
   }else if(answerData.questionIndex < items.length){
-    console.log("answerData.questionIndex = " + answerData.questionIndex);
+    // 最終ページのとき（回答の送信へ）
     Post.exec(answerData);
   }
 }
 
-// 次の設問に進む
+// 次の設問に進む ------------------------------------------------------------
 function showNext(items, answerData){
   const backButton = document.getElementById('backButton');
   backButton.classList.remove('hidden');
@@ -145,17 +170,11 @@ function showNext(items, answerData){
   if(answerData.questionIndex == items.length - 1){
     const nextButton = document.getElementById("nextButton");
     nextButton.textContent = "登録";
-    showGoal(items, answerData);
   }
   showQuestion(items, answerData);
 }
 
-// 終了画面
-function showGoal(items, answerData){
-  console.log("Questions.showGoal()");
-}
-
-// アクションメッセージ
+// アクションメッセージ ------------------------------------------------------------
 function setActionMessage(msg, color){
   const actionMessage = document.getElementById("actionMessage");
   actionMessage.innerHTML = [
