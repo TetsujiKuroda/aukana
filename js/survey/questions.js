@@ -1,6 +1,7 @@
 //--------------------------------------------------------------------------------
 // Questions.js
 //--------------------------------------------------------------------------------
+import * as Post from '/js/survey/post.js';
 
 // 回答の記憶オブジェクト
 const answerData = {};
@@ -18,6 +19,7 @@ export function start(json, id) {
   nextButton.addEventListener("click", function(){
     goNext(json.items, answerData);
   });
+
   // 診断タイトルを表示
   const title = document.getElementById("surveyTitle");
   title.innerText = json.title;
@@ -66,6 +68,19 @@ function showQuestion(items, answerData){
     item.option3 ? createButton(3, item.option3) : '',
     item.option4 ? createButton(4, item.option4) : '',
   ].join('');
+
+  // すでに回答があれば反映
+  const selectedAnswer = answerData.selectedOptions[parseInt(answerData.questionIndex)];
+  const selectedButton = document.querySelector(`input[name="surveyOption"][value="${selectedAnswer}"]`);
+  if (selectedButton) selectedButton.checked = true;
+
+  // ボタン表示の制御
+  const backButton = document.getElementById('backButton');
+  if(answerData.questionIndex < 1){
+    backButton.classList.add('hidden');
+  }else{
+    backButton.classList.remove('hidden');
+  }
 }
 
 // 選択肢ボタンの作成
@@ -87,44 +102,52 @@ function createButton(num, caption){
 
 // 戻るボタンのイベントハンドラー
 function goBack(items, answerData){
-  if(answerData.questionIndex > 0){
-    answerData.questionIndex--;
-    showQuestion(items, answerData);
-    resetActionMessage();
-  }else{
-    setActionMessage('先頭のためこれ以前には戻れません。', 'red');
-  }
+  resetActionMessage();
+  const nextButton = document.getElementById("nextButton");
+  nextButton.textContent = "次に進む ＞";
+  answerData.questionIndex--;
+  showQuestion(items, answerData);
 }
 
 // 進むボタンのイベントハンドラー
 function goNext(items, answerData){
   resetActionMessage();
-  const item = items[answerData.questionIndex];
-  console.log(item);
-  if(item.option1 || item.option2 || item.option3 || item.option4){
-    // 選択肢が存在するとき、選択状態をチェック
-    const questionOptions = document.getElementById("questionOptions");
-    const selectedOption = questionOptions.querySelector('input[type="radio"]:checked');
-    if(selectedOption){
-      answerData.selectedOptions[answerData.questionIndex] = selectedOption.value;
-      showNext(items, answerData)
+  if(answerData.questionIndex < items.length - 1){
+    // まだ最終ページでないとき
+    const nextButton = document.getElementById("nextButton");
+    nextButton.textContent = "次に進む ＞";
+    const item = items[answerData.questionIndex];
+    if(item.option1 || item.option2 || item.option3 || item.option4){
+      // 選択肢が存在するとき、選択状態をチェック
+      const questionOptions = document.getElementById("questionOptions");
+      const selectedOption = questionOptions.querySelector('input[type="radio"]:checked');
+      if(selectedOption){
+        answerData.selectedOptions[answerData.questionIndex] = selectedOption.value;
+        showNext(items, answerData)
+      }else{
+        setActionMessage('回答を選択してください。', 'red');
+      }
     }else{
-      setActionMessage('回答を選択してください。', 'red');
-    }
-  }else{
-    // 選択肢が存在しないとき、無条件で次へ進む
-    showNext(items, answerData)
-  }  
+      // 選択肢が存在しないとき、無条件で次へ進む
+      showNext(items, answerData)
+    }        
+  }else if(answerData.questionIndex < items.length){
+    console.log("answerData.questionIndex = " + answerData.questionIndex);
+    Post.exec(answerData);
+  }
 }
 
 // 次の設問に進む
 function showNext(items, answerData){
+  const backButton = document.getElementById('backButton');
+  backButton.classList.remove('hidden');
   answerData.questionIndex++;
-  if(answerData.questionIndex < items.length){
-    showQuestion(items, answerData);
-  }else{
+  if(answerData.questionIndex == items.length - 1){
+    const nextButton = document.getElementById("nextButton");
+    nextButton.textContent = "登録";
     showGoal(items, answerData);
   }
+  showQuestion(items, answerData);
 }
 
 // 終了画面
