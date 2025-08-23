@@ -27,7 +27,6 @@ export function start(json, id) {
   answerData.title = json.title;
   answerData.questionIndex = 0;
   answerData.selectedOptions = Array(json.items.length).fill('');
-  console.log(answerData);
 
   // 非表示を解除
   const questionArea = document.getElementById("questionArea");
@@ -42,13 +41,18 @@ export function start(json, id) {
 // 質問と回答を表示
 function showQuestion(items, answerData){
   console.log("Questions.showQuestion()");
+  console.log(answerData);
 
   // 設問データを取得
   const item = items[answerData.questionIndex];
 
   // 設問タイトルを表示
   const questionLabel = document.getElementById("surveyMessage");
-  questionLabel.innerText = `（${answerData.questionIndex + 1}/${items.length}）${item.label}`;
+  if(item.no == "0" || item.no == "99"){
+    questionLabel.innerText = item.label;
+  }else{
+    questionLabel.innerText = `（${item.no}/${items.length - 2}）${item.label}`;
+  }
 
   // 設問を表示
   const questionText = document.getElementById("questionText");
@@ -86,30 +90,60 @@ function goBack(items, answerData){
   if(answerData.questionIndex > 0){
     answerData.questionIndex--;
     showQuestion(items, answerData);
+    resetActionMessage();
+  }else{
+    setActionMessage('先頭のためこれ以前には戻れません。', 'red');
   }
 }
 
-// 進ボタンのイベントハンドラー
+// 進むボタンのイベントハンドラー
 function goNext(items, answerData){
-  if(answerData.questionIndex < items.length){
-    // 選択状態を取得
+  resetActionMessage();
+  const item = items[answerData.questionIndex];
+  console.log(item);
+  if(item.option1 || item.option2 || item.option3 || item.option4){
+    // 選択肢が存在するとき、選択状態をチェック
     const questionOptions = document.getElementById("questionOptions");
     const selectedOption = questionOptions.querySelector('input[type="radio"]:checked');
     if(selectedOption){
       answerData.selectedOptions[answerData.questionIndex] = selectedOption.value;
-      console.log(answerData.selectedOptions);
-      // 次の設問へ進む
-      answerData.questionIndex++;
-      if(answerData.questionIndex < items.length){
-        showQuestion(items, answerData);
-      }else{
-        showGoal(items, answerData);
-      }
+      showNext(items, answerData)
+    }else{
+      setActionMessage('回答を選択してください。', 'red');
     }
+  }else{
+    // 選択肢が存在しないとき、無条件で次へ進む
+    showNext(items, answerData)
   }  
+}
+
+// 次の設問に進む
+function showNext(items, answerData){
+  answerData.questionIndex++;
+  if(answerData.questionIndex < items.length){
+    showQuestion(items, answerData);
+  }else{
+    showGoal(items, answerData);
+  }
 }
 
 // 終了画面
 function showGoal(items, answerData){
   console.log("Questions.showGoal()");
+}
+
+// アクションメッセージ
+function setActionMessage(msg, color){
+  const actionMessage = document.getElementById("actionMessage");
+  actionMessage.innerHTML = [
+    `<p class="text-base text-${color}-500">`,
+    msg,
+    '</p>'
+  ].join('');
+  actionMessage.classList.remove('hidden');
+}
+function resetActionMessage(){
+  const actionMessage = document.getElementById("actionMessage");
+  actionMessage.innerHTML = '';
+  actionMessage.classList.add('hidden');
 }

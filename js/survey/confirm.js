@@ -30,7 +30,7 @@ export function onClickOkButton(){
     } else {
       // 入力OKならJSON取得へ
       const loading = '<span class="loading-spinner"></span>';
-      setMessage(loading + "検索中...");
+      setMessage(loading + "読み込み中...");
       getJson(inputValue);
     }
   }else{
